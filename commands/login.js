@@ -40,7 +40,7 @@ module.exports = {
 			url = url.substring(0, url.length - 1);
 		}
 		
-		client.get(url, function(data) {
+		//client.get(url, function(data) {
 		
 			process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 			client.post(url + "/api/auth/login",
@@ -83,7 +83,7 @@ module.exports = {
 					throw "Error logging in: " + err;
 				}
 			);
-		});
+		//});
 		
 	},
 	
