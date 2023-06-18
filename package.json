@@ -1,5 +1,5 @@
 {
-  "name": "liveapicreator-cli",
+  "name": "apilogicserver-cli",
   "version": "5.2.2",
   "description": "A REST command line utility for API Logic Server a Python open source microservice creation platform",
   "main": "apilogicserver.js",

@@ -119,7 +119,7 @@ module.exports = {
 		//return null;
 	},
 	
-	// Write the given URL to ~/.liveapicreator/currentServer.txt
+	// Write the given URL to ~/.apilogicserver/currentServer.txt
 	setCurrentServer: function(url, login) {
 		let dotDirName = this.getDotDirectory();
 		let dotFileName = dotDirName + "/currentServer.txt";

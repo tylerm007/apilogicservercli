@@ -7,11 +7,10 @@ Refer to online documentation of creating and using  API Logic Server [REST API]
 ## Installation
 
 ```aidl
-    git clone https://github.com/EspressoLogicCafe/liveapicreator-devops.git
-    cd liveapicreator-devops
+    git clone https://github.com/tylerm007/apilogicservercli.git
+    cd apilogicservercli
     
-    Select one of three directories (platform: windows, linux, and macos) and copy the 'lac' and 'lacadmin' to your
-    path where you intend to run your scripts.
+    node install -g
 ```
 
 
@@ -23,7 +22,7 @@ Refer to online documentation of creating and using  API Logic Server [REST API]
 
 ## Command Line Service
 ```sh
-  Usage: lac [options] [command]
+  Usage: als [options] [command]
   
   
     Commands:
@@ -50,7 +49,7 @@ Refer to online documentation of creating and using  API Logic Server [REST API]
 
 ## Logon to an API Server
 ```sh
-$als login -u u1 -p p http://localhost:5656
+$als login http://localhost:5656 -u ui -p 1 -a northwind
 Logging in...
 Login successful, JWT key will expire on: 2023-11-18T15:03:37.342Z
 ```
@@ -58,7 +57,7 @@ Login successful, JWT key will expire on: 2023-11-18T15:03:37.342Z
 
 ## See which API server (if any) you are logged into
 ```sh
-$lac status
+$als status
 
 You are currently logged in to server: https://localhost:8080/rest/default/demo/v1 as user: demo
 Defined aliases:
@@ -85,7 +84,7 @@ or the server's license. The possible values for the resource are:
 * serverinfo
 
 ```sh
-$lac describe tables
+$als describe tables
 
 DB    Table
 ----  -------------------
@@ -99,7 +98,7 @@ demo  purchaseorder_audit
 ```
 
 ```sh
-$lac describe tables/product
+$als describe tables/product
 
 Name            Type     Size      PK
 --------------  -------  --------  --
@@ -131,7 +130,7 @@ full_image      BLOB     16777215
 
 ## Get a single REST endpoint (compressed format)
 ```sh
-$lac get demo:employee
+$als get "apl/Employee"
 
 demo:employee/1 employee_id:1 login:sam name:Sam Yosemite
 demo:employee/2 employee_id:2 login:mlittlelamb name:Mary Little-Lamb
@@ -143,40 +142,22 @@ etc...
 
 ## GET a single REST endpoint (JSON format)
 ```sh
-$lac get employee/4 -m json
+$als get "api/Employee/4" -m json
 [
   {
-    "@metadata": {
-      "href": "http://localhost:8080/rest/default/demo/v1/demo:employee/4",
-      "checksum": "A:3ed29188014675ec",
-      "links": [
-        {
-          "href": "http://llocalhost:8080/rest/default/demo/v1/demo:employee_picture?filter=employee_id%20%3D%204",
-          "rel": "children",
-          "role": "employee_pictureList",
-          "type": "http://localhost:8080/rest/default/demo/demo:employee_picture"
-        },
-        {
-          "href": "http://localhost:8080/rest/default/demo/v1/demo:PurchaseOrder?filter=salesrep_id%20%3D%204",
-          "rel": "children",
-          "role": "PurchaseOrderList",
-          "type": "http://llocalhost:8080/rest/default/demo/demo:PurchaseOrder"
-        }
-      ]
-    },
     "employee_id": 4,
     "login": "jkim",
     "name": "John Kim"
   }
 ]
 
-$lac get demo:customer --userfilter "myFilter(custname:'Alpha and Sons')" --userorder "sortByName"
+$als get "api/Customer" --userfilter "myFilter(custname:'Alpha and Sons')" --userorder "sortByName"
 ```
 
 ## POST (insert) a JSON payload
 
 ```sh
-$lac post --help
+$als post --help
 
   Usage: post <resource> [options]
 
@@ -188,7 +169,7 @@ $lac post --help
     -m, --format <format>            Optional: format of output, either text (default), json or compactjson
     -a, --serverAlias <serverAlias>  Optional: alias of the server to use if other than the current default server
 
-$lac post customer -j '{ "name": "new posted record","balance": 0,"credit_limit": 9000 }'
+$als post customer -j '{ "name": "new posted record","balance": 0,"credit_limit": 9000 }'
 
 POST for customer:
 I demo:customer/new%20posted%20record name:new posted record balance:0 credit_limit:9000
@@ -198,7 +179,7 @@ Request took: 61ms - # objects touched: 1
 ## PUT (update) a JSON Payload
 
 ```sh
-$lac put --help
+$als put --help
 
   Usage: put <resource> [options]
 
@@ -210,19 +191,18 @@ $lac put --help
     -m, --format <format>            Optional: format of output, either text (default), json or compactjson
     -a, --serverAlias <serverAlias>  Optional: alias of the server to use if other than the current default server
 
-$ liveapicreator put customer -j '{ "@metadata": {"checksum": "A:693190f461f5402e"  }, "name": "new posted record", "credit_limit": 8000  }'
+$ als put customer -j '{"name": "new posted record", "credit_limit": 8000  }'
 
-PUT for customer:
-U demo:customer/new%20posted%20record name:new posted record balance:0 credit_limit:8000
+PUT for Customer:
+U Customer/new%20posted%20record name:new posted record balance:0 credit_limit:8000
 Request took: 42ms - # objects touched: 1
 ```
-note: you can replace the checksum value with "override" - but this overrides optimistic locking so use it wisely.
 
 ## DELETE a REST resource
 Required fields are the primary key (--pk <pkey>) and checksum (--checksum <value>)
 
 ```sh
-$lac delete --help
+$als delete --help
 
   Usage: delete <resource> [options]
 
@@ -235,11 +215,11 @@ $lac delete --help
     -m, --format <format>            Optional: format of output, either text (default), json or compactjson
     -a, --serverAlias <serverAlias>  Optional: alias of the server to use if other than the current default server
 
-liveapicreator delete customer -k "new posted record" --checksum "A:e86aea2e0a4e74bf"
+als delete customer -k "new posted record" --checksum "A:e86aea2e0a4e74bf"
 ```
 ## Logout
 
 ```sh
-$lac logout
+$als logout
 Logout successful
 ```
