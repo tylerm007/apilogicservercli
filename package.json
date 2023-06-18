@@ -1,0 +1,69 @@
+{
+  "name": "liveapicreator-cli",
+  "version": "5.2.2",
+  "description": "A REST command line utility for API Logic Server a Python open source microservice creation platform",
+  "main": "apilogicserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "API Logic Server",
+    "command line",
+    "REST",
+    "API",
+    "RESTful",
+    "database",
+    "rules",
+    "SQLAlchemy",
+    "safrs",
+    "json-api",
+    "OpenAPI",
+    "sql",
+    "mysql",
+    "oracle",
+    "nosql",
+    "postgres",
+    "sqlserver",
+    "postgresql",
+    "mciroservice",
+    "reactive"
+  ],
+  "preferGlobal": "true",
+  "bin": {
+    "apiservercli" : "apilogicserver.js",
+    "als" : "apilogicserver.js"
+  },
+  "author": "Tyler Band",
+  "license": "Apache",
+  "dependencies": {
+    "colors": "^1.0.3",
+    "commander": "^2.5.0",
+    "cli-table": "0.3.1",
+    "easy-table": "0.3.0",
+    "node-rest-client": "^1.8.0",
+    "osenv": "^0.1.0",
+    "underscore": "^1.7.0",
+    "querystring":"^0.2.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EspressoLogicCafe/CALiveAPICreatorCLI.git"
+  },
+  "pkg": {
+   "scripts": [
+   		"commands/**/*.js",
+   		"util/**/*.js"
+   		],
+    "assets": [
+      "views/**/*"
+    ],
+    "targets": [
+      "node7"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/EspressoLogicCafe/CALiveAPICreatorCLI.git/issues"
+  },
+  "homepage": "https://github.com/EspressoLogicCafe/CALiveAPICreatorCLI.git"
+}
