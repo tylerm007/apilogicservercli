@@ -48,7 +48,7 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/EspressoLogicCafe/CALiveAPICreatorCLI.git"
+    "url": "https://github.com/tylerm007/apilogicservercli"
   },
   "pkg": {
    "scripts": [
@@ -63,7 +63,7 @@
     ]
   },
   "bugs": {
-    "url": "https://github.com/EspressoLogicCafe/CALiveAPICreatorCLI.git/issues"
+    "url": "https://github.com/tylerm007/apilogicservercli/issues"
   },
-  "homepage": "https://github.com/EspressoLogicCafe/CALiveAPICreatorCLI.git"
+  "homepage": "https://github.com/tylerm007/apilogicservercli.git"
 }
