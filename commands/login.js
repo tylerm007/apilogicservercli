@@ -52,8 +52,9 @@ module.exports = {
 					headers: {"Content-Type": "application/json"}
 				},
 				function(data, response) {
-					if (data.errorMessage) {
-						console.log(("Login failed: " + data.errorMessage).red);
+					someError = printObject.byteArrayToString(data)
+					if (someError.indexOf("Internal Server Error") > 0) {
+						console.log(("Login failed: " + someError).red);
 						return;
 					}
 					let fullData = {
@@ -133,13 +134,13 @@ module.exports = {
 					return;
 				}
 				let fileContent = JSON.parse(fs.readFileSync(dotDirName + "/" + f));
-				let expiration = Date.parse(fileContent.loginInfo.expiration);
-				if (expiration > new Date()) {
-					if (fileContent.alias) {
-						tbl.push([fileContent.alias, fileContent.url, fileContent.userName]);
-						numAliases++;
-					}
+				//let expiration = Date.parse(fileContent.loginInfo.expiration);
+				//if (expiration > new Date()) {
+				if (fileContent.alias) {
+					tbl.push([fileContent.alias, fileContent.url, fileContent.userName]);
+					numAliases++;
 				}
+				//}
 				else {
 					dotfile.deleteDotFile(fileContent.url, fileContent.userName);
 				}
