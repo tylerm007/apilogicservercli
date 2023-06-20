@@ -22,45 +22,37 @@ module.exports = {
 		}
 		
 		let params = "";
-		if (cmd.sysfilter) {
+		if (cmd.filter) {
 			params += params.length ? "&" : "?";
-			params += "sysfilter=" + querystring.escape(cmd.sysfilter);
+			params += querystring.escape(cmd.filter);
 		}
 		
-		if (cmd.sysorder) {
+		if (cmd.order) {
 			params += params.length ? "&" : "?";
-			params += "sysorder=" + querystring.escape(cmd.sysorder);
+			params +=  querystring.escape(cmd.order);
 		}
 		
 		if (cmd.userfilter) {
 			params += params.length ? "&" : "?";
-			params += "userfilter=" + querystring.escape(cmd.userfilter);
+			params += querystring.escape(cmd.userfilter);
 		}
 		
 		if (cmd.userorder) {
 			params += params.length ? "&" : "?";
-			params += "userorder=" + querystring.escape(cmd.userorder);
+			params += querystring.escape(cmd.userorder);
 		}
 		
 		if (cmd.pagesize) {
 			params += params.length ? "&" : "?";
-			params += "pagesize=" + cmd.pagesize; 
+			params += "page[limit]=" + cmd.pagesize; 
 		}
 		
 		
 		if (cmd.offset) {
 			params += params.length ? "&" : "?";
-			params += "offset=" + cmd.offset; 
-		}
-		if (cmd.nometa) {
-			params += params.length ? "&" : "?";
-			params += "nometa=" + cmd.nometa; 
+			params += "page[offset]=" + cmd.offset; 
 		}
 		
-		if (cmd.inlinelimit) {
-			params += params.length ? "&" : "?";
-			params += "inlinelimit=" + cmd.inlinelimit; 
-		}
 		
 		if (cmd.format) {
 			if (cmd.format !== "text" && cmd.format !== "json" && cmd.format !== "compactjson") {
@@ -83,19 +75,19 @@ module.exports = {
 				Authorization: "Bearer " + apiKey,
 				"Content-Type": "application/json"
 			}
-		}, function(dataResp) {
+		}, function(dataBytes) {
 			//console.log('get result: ' + JSON.stringify(data, null, 2));
 			let endTime = new Date();
-			if (dataResp.errorMessage) {
-				console.log(("Error: " + dataResp.errorMessage).red);
+			data = printObject.byteArrayToString(dataBytes)//add file export option here.
+			if (data.indexOf("Internal Server Error") > 0) {
+				console.log(("Error: " + data).red);
 				return;
 			}
-			data = printObject.byteArrayToString(dataResp)//add file export option here.
 			
 			if (cmd.jsonfile) {
 				let exportFile = fs.openSync(cmd.jsonfile, 'w+', 0600);
-				fs.writeSync(exportFile, JSON.stringify(data, null, 2));
-				console.log(('data has been exported to file: ' + cmd.jsonfile).green);
+				fs.writeSync(exportFile, data);
+				console.log(('JSON data has been exported to file: ' + cmd.jsonfile).green);
 				return;
 			}
 			let termWidth = 80;
@@ -112,19 +104,23 @@ module.exports = {
 			}
 						
 			if (cmd.format == "json") {
-				console.log(JSON.stringify(data, null, 2));
+				//console.log(JSON.stringify(data, null, 2));
+				console.log(data)
 			}
 			else if (cmd.format == "compactjson") {
-				console.log(JSON.stringify(data));
+				//console.log(JSON.stringify(data));
+				console.log(data)
 			}
 			else {
 				if (Array.isArray(data)) {
 					_.each(data, function(obj) {
-						printObject.printObject(obj, null, 0, null, cmd.truncate);
+						//printObject.printObject(obj, null, 0, null, cmd.truncate);
+						console.log(data)
 					});
 				}
 				else {
-					printObject.printObject(data, cmd.resource, 0, null, cmd.truncate);
+					//printObject.printObject(data, cmd.resource, 0, null, cmd.truncate);
+					console.log(data)
 				}
 			}
 			
@@ -137,8 +133,8 @@ module.exports = {
 					}
 					let nextBatchPresent = false;
 					if (data.length > 0) {
-						nextBatchPresent = data[data.length - 1]["@metadata"] && 
-							data[data.length - 1]["@metadata"].next_batch;
+						nextBatchPresent = data["data"] && 
+							data["data"].next_batch;
 					}
 					trailer += data.length - (nextBatchPresent ? 1 : 0);
 				}

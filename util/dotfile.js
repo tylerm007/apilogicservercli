@@ -92,11 +92,11 @@ module.exports = {
 			return null;
 		}
 		let keyObject = JSON.parse(fs.readFileSync(dotFileName));
-		let expiration = Date.parse(keyObject.loginInfo.expiration);
-		if (expiration > new Date()) {
-			return keyObject;
-		}
-		console.log('The API key for this server has expired - you need to log in again'.yellow);
+		//et expiration = Date.parse(keyObject.loginInfo.expiration);
+		//if (expiration > new Date()) {
+		//	return keyObject;
+		//}
+		console.log('The JWT key for this server has expired - you need to log in again'.yellow);
 		this.deleteDotFileForAlias(alias);
 		return null;
 	},

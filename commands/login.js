@@ -51,12 +51,13 @@ module.exports = {
 					},
 					headers: {"Content-Type": "application/json"}
 				},
-				function(data, response) {
-					someError = printObject.byteArrayToString(data)
-					if (someError.indexOf("Internal Server Error") > 0) {
-						console.log(("Login failed: " + someError).red);
+				function(dataBytes, response) {
+					someData = printObject.byteArrayToString(dataBytes)
+					if (someData.indexOf("Internal Server Error") > 0) {
+						console.log(("Login failed: " + someData).red);
 						return;
 					}
+					data = JSON.parse(someData)
 					let fullData = {
 						url: url,
 						userName: cmd.username,

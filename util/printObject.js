@@ -31,7 +31,7 @@ module.exports = {
 //		}
 		
 		// If this is the next page object, treat as such
-		if (obj['@metadata'] && obj['@metadata'].next_batch) {
+		if (obj['data'] && obj['data'].next_batch) {
 			objSum += "more...";
 			console.log(objSum.cyan);
 			nextBatch = true;
@@ -40,10 +40,10 @@ module.exports = {
 		
 		let entNameLength = 0;
 		let pkLength = 0;
-		if (obj['@metadata']) {
-			let entName = obj['@metadata'].href.match(/.*\/([^/]+)\/[^/]+$/);
+		if (obj['data']) {
+			let entName = obj['data'].href.match(/.*\/([^/]+)\/[^/]+$/);
 			entNameLength = entName[1].length;
-			let pk = obj['@metadata'].href.match(/.*\/(.+)$/);
+			let pk = obj['data'].href.match(/.*\/(.+)$/);
 			pkLength = pk[1].length;
 			objSum += entName[1].green + "/" + pk[1].cyan;
 		}
@@ -54,7 +54,7 @@ module.exports = {
 			lineLength += prefix.length + 2;
 		}
 		for (let prop in obj) {
-			if ("@metadata" === prop) { continue; }
+			if ("data" === prop) { continue; }
 			let val = obj[prop];
 			//console.log('Property ' + prop + ' is of type ' + typeof val + " : " + val);
 			if (val === null) {

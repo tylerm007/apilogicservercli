@@ -18,7 +18,7 @@ module.exports = {
 			url = loginInfo.url;
 			jwt = dotfile.getApiKey(loginInfo.url, loginInfo.userName);
 			if ( ! jwt) {
-				console.log('You cannot run this command because you are not currently logged in. (lac login -h)'.red);
+				console.log('You cannot run this command because you are not currently logged in. (als login -h)'.red);
 				return;
 			}
 		}
