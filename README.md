@@ -2,7 +2,8 @@
 
 # API Logic Server Command Line
 A command-line tool to access API Logic Server REST API and Logic services.
-Refer to online documentation of creating and using  API Logic Server [REST API](https://apilogicserver.github.io/Docs/) 
+The API Logic Server must be running with security (JWT) for all commands to work correctly.
+Refer to online documentation of creating and running the API Logic Server [REST API](https://apilogicserver.github.io/Docs/) 
 
 ## Installation
 
@@ -11,6 +12,8 @@ Refer to online documentation of creating and using  API Logic Server [REST API]
     cd apilogicservercli
     
     node install -g
+
+    node apilogicservercli.js --help (or use the shortcut als --help)
 ```
 
 
@@ -31,7 +34,7 @@ Refer to online documentation of creating and using  API Logic Server [REST API]
       logout [options] [url]                  Logout from the current server, or a specific server
       use <alias>                             Use the specified server by default
       status                                  Show the current server, and any defined server aliases
-      get [options] <resource>                Retrieve some data for the given resource/table/view
+      get [options] <resource>                Retrieve some data for the given table/view or custom endpoint
       post [options] <resource>               Insert some data
       put [options] <resource>                Update some data
       delete [options] <resource>             Delete some data
@@ -64,24 +67,19 @@ Defined aliases:
 ┌───────┬───────────────────────────────────────────────────────────┬───────┐
 │ Alias │ Server                                                    │ User  │
 ├───────┼───────────────────────────────────────────────────────────┼───────┤
-│sample │ https://localhost:8080/rest/default/sample/v1             │sample │
+| nw    │ https://localhost:5656/                                   | u1    │
 ├───────┼───────────────────────────────────────────────────────────┼───────┤
-│ demo  │ https://localhost:8080/rest/default/demo/v1               │ demo  │
+│ demo  │ https://localhost:5656/                                   │ demo  │
 └───────┴───────────────────────────────────────────────────────────┴───────┘
 ```
 
 
 ## DESCRIBE a system resource
 This can return information about all tables, or one specific table,
-or all views/one specific view, or get information about the server
-or the server's license. The possible values for the resource are:
+or all views/one specific view, The possible values for the resource are:
 
 * tables
 * tables/&lt;table-name>
-* views
-* views/&lt;view-name>
-* license
-* serverinfo
 
 ```sh
 $als describe tables
@@ -118,11 +116,10 @@ full_image      BLOB     16777215
 
     -h, --help                       output usage information
     -k, --pk <pk>                    Optional: primary key of the object to retrieve
-    -f, --sysfilter <sysfilter>      Optional: sysfilter, e.g. "less(balance:1000) or equal(name:'SomeName')
-    -s, --sysorder <sysorder>        Optional: sorting sysorder, e.g. "(balance asc,name desc_uc)"
-    -g, --userfilter <named filter>  Optional: named filter, e.g. "namedFilter(columnName:'SomeName')
-    -t, --userorder <named order>    Optional: named sorts, e.g. "namedSort([columnName])"
-    -z, --pagesize <pagesize>        Optional: up to how many rows to return per level
+    -f, --filter                     Optional: filter, e.g. "filter[name]=SomeName"
+    -s, --sort                       Optional: sorting order, e.g. "sort=balance 
+    -z, --pagesize <20>              Optional: up to how many rows to return per level
+    -o, --offset <0>                 Optional: up to how many rows to return per level
     -m, --format <format>            Optional: format of output, either text (default), json or compactjson    --truncate <length>
     -a, --serverAlias <serverAlias>  Optional: alias of the server to use if other than the current default server
 ```

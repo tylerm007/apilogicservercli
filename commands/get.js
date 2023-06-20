@@ -14,7 +14,7 @@ module.exports = {
 		
 		let loginInfo = login.login(cmd);
 		let url = loginInfo.url;
-		let apiKey = loginInfo.jwt;
+		let jwt = loginInfo.jwt;
 
 		if ( ! resName) {
 			console.log('Error: a resource or table name must be specified'.red);
@@ -72,7 +72,7 @@ module.exports = {
 		let startTime = new Date();
 		client.get(url + "/" + objUrl + params, {
 			headers: {
-				Authorization: "Bearer " + apiKey,
+				Authorization: "Bearer " + jwt,
 				"Content-Type": "application/json"
 			}
 		}, function(dataBytes) {
