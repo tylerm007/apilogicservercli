@@ -27,19 +27,9 @@ module.exports = {
 			params += querystring.escape(cmd.filter);
 		}
 		
-		if (cmd.order) {
+		if (cmd.sort) {
 			params += params.length ? "&" : "?";
-			params +=  querystring.escape(cmd.order);
-		}
-		
-		if (cmd.userfilter) {
-			params += params.length ? "&" : "?";
-			params += querystring.escape(cmd.userfilter);
-		}
-		
-		if (cmd.userorder) {
-			params += params.length ? "&" : "?";
-			params += querystring.escape(cmd.userorder);
+			params +=  querystring.escape(cmd.sort);
 		}
 		
 		if (cmd.pagesize) {

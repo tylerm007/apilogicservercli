@@ -27,13 +27,13 @@ module.exports = {
 			apiKey = dotfile.getApiKey(login.url, login.userName);
 		}
 		
-		if ( ! (resource && cmd.pk && cmd.checksum) && !cmd.jsonfile) {
+		if ( ! (resource) && !cmd.jsonfile) {
 			console.log('Error: a resource or table name must be specified, or a JSON file must be specified'.red);
 			return;
 		}
 		
-		function delObject(url, checksum) {
-			client['delete'](url + "?checksum=" + checksum, {
+		function delObject(url) {
+			client['delete'](url, {
 				headers: {
 					Authorization: "Bearer " + apiKey ,
 					"Content-Type": "application/json"
@@ -42,8 +42,8 @@ module.exports = {
 				//console.log(data);
 				numDeletedObjects++;
 				data = printObject.byteArrayToString(dataResp)
-				if (data.errorMessage) {
-					console.log(("Error: " + data.errorMessage).red);
+				if (data.indexOf("errors")) {
+					console.log(("Error: " + data).red);
 					return;
 				}
 				if (cmd.format == "json") {
@@ -114,16 +114,10 @@ module.exports = {
 					}
 				});
 			}
-			else {
-				if (objs['@metadata'] && objs['@metadata'].href) {
-					numObjectsToDelete++;
-					delObject(objs['@metadata'].href, objs['@metadata'].checksum);
-				}
-			}
 		}
 		else {
 			numObjectsToDelete = 1;
-			delObject(url + "/" + resource + "/" + cmd.pk, cmd.checksum);
+			delObject(url + "/" + resource + "/" + cmd.pk);
 		}
 		
 		function printTrailer() {

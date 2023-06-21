@@ -110,13 +110,13 @@ module.exports = {
 			return null;
 		}
 		let keyObject = JSON.parse(fs.readFileSync(dotFileName));
-		//let expiration = Date.parse(keyObject.loginInfo.expiration);
-		//if (expiration > new Date()) {
-		return keyObject.jwt;
-		//}
-		//console.log('The Bearer key for this server has expired - you need to log in again'.yellow);
-		//this.deleteDotFile(url, userName);
-		//return null;
+		let expiration = Date.parse(keyObject.expiration);
+		if (expiration > new Date()) {
+			return keyObject.jwt;
+		}
+		console.log('The Bearer key for this server has expired - you need to log in again'.yellow);
+		this.deleteDotFile(url, userName);
+		return null;
 	},
 	
 	// Write the given URL to ~/.apilogicserver/currentServer.txt
@@ -128,7 +128,7 @@ module.exports = {
 			url: url,
 			userName: login.userName,
 			jwt: login.jwt,
-			expiration: new Date()
+			expiration: this.parseJwtExpiration(login.jwt)
 		};
 		fs.writeSync(dotFile, JSON.stringify(record));
 	},
@@ -140,8 +140,12 @@ module.exports = {
 		if ( ! fs.existsSync(dotDirName)) {
 			return null;
 		}
-		let objStr = fs.readFileSync(dotFileName);
-		return JSON.parse(objStr);
+		try{
+			let objStr = fs.readFileSync(dotFileName);
+			return JSON.parse(objStr);
+		} catch(E) {
+			return "No current Server found";
+		}
 	},
 	
 	unsetCurrentServer: function() {
@@ -156,6 +160,12 @@ module.exports = {
 				if(err) {console.log("not logged into a server")};
 			});
 		}
-	
+	},
+	parseJwt: function(token) {
+		return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+	},
+	parseJwtExpiration: function(token) {
+		j = this.parseJwt(token);
+		return new Date(new Date(0).setUTCSeconds(j.exp));
 	}
 };

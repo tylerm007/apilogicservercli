@@ -31,7 +31,7 @@ module.exports = {
 			termWidth = process.stdout.getWindowSize()[0];
 
 		let startTime = new Date();
-		client.get(url + "/@" + resName, {
+		client.get(url + "/" + resName, {
 			headers: {
 				Authorization: "Bearer " + apiKey,
 				"Content-Type": "application/json"
@@ -64,9 +64,6 @@ module.exports = {
 			}
 			else if (resName.match(/views\/.+/)) {
 				module.exports.describeTable(data, "View");
-			}
-			else if (resName === 'license' || resName === 'serverinfo') {
-				module.exports.asTable(data);
 			}
 		});
 	},

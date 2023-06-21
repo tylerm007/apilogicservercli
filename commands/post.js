@@ -60,14 +60,15 @@ module.exports = {
 			data: cmd.json,
 			headers: {
 				Authorization: "Bearer " + apiKey,
-				"Content-Type": "application/json"
+				"Content-Type": "application/json",
+				"accept": "application/vnd.api+json"
 			}
-		}, function (data) {
+		}, function (dataResp) {
 			//console.log(data);
-
+			data = printObject.byteArrayToString(dataResp)
 			let endTime = new Date();
-			if (data.errorMessage) {
-				console.log(("Error: " + data.errorMessage).red);
+			if (data.indexOf("errors") > 0 || data.indexOf("message") > 0) {
+				console.log(("Error: " + data).red);
 				return;
 			}
 			if (cmd.output) {

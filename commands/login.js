@@ -58,18 +58,20 @@ module.exports = {
 						return;
 					}
 					data = JSON.parse(someData)
+					expiration = dotfile.parseJwtExpiration(data.access_token)
 					let fullData = {
 						url: url,
 						userName: cmd.username,
 						alias: cmd.serverAlias,
-						jwt: data.access_token
+						jwt: data.access_token,
+						expiration: expiration
 					};
 
 					dotfile.writeToDotFile(url, fullData)
 					.then(
 						// Log completion of login process.
 						function(val){	
-							console.log('Login successful, this JWT key will expire on: ') // + fullData.loginInfo.expiration).green);
+							console.log(('Login successful, this JWT key will expire on: ' + fullData.expiration).green);
 						}
 						)
 					.catch(
@@ -163,7 +165,7 @@ module.exports = {
 					' as user ' + currentLogin.userName.yellow);
 		}
 		else {
-			console.log('You are not currently logged in to any CA Live API Creator server'.yellow);
+			console.log('You are not currently logged in to any API Logic Server server'.yellow);
 		}
 		
 	}

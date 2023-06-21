@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * A command-line interface for CA Live API Creator from CA Technologies
+ * A command-line interface for API Logic Server (an open source Python framework based on Flask, SQLAlchemy, LogicBank, and OpenAPI)
  */
 
 let program = require('commander');
@@ -69,7 +69,7 @@ program
 
 program
 	.command('put <resource>')
-	.description('Update json data to <resource> endpoint')
+	.description('Update (aka patch) json data to <resource> endpoint')
 	.option('-k, --pk <pk>', 'Primary key of the table or resource')
 	.option('-j, --json <json>', 'JSON string in quotes ' + "'{a: 1, b: 'c'}'" + ' for the data being updated ')
 	.option('-f, --jsonfile <jsonfile>', 'Name of a file containing JSON to be updated, or stdin to read from stdin')
