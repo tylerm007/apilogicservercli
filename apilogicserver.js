@@ -76,7 +76,7 @@ program
 	.option('--output <filename>', 'Optional: name of output file to write put results')
 	.option('-m, --format <format>', 'Optional: format of output, in json format')
 	.option('-a, --serverAlias <serverAlias>', 'Optional: alias of the server to use if other than the current default server')
-	.action(function(resource, cmd) { post.commandPost(resource, cmd, 'put'); });
+	.action(function(resource, cmd) { post.commandPost(resource, cmd, 'patch'); });
 
 program
 	.command('delete <resource>')

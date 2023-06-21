@@ -60,8 +60,7 @@ module.exports = {
 			data: cmd.json,
 			headers: {
 				Authorization: "Bearer " + apiKey,
-				"Content-Type": "application/json",
-				"accept": "application/vnd.api+json"
+				"Content-Type": "application/json"
 			}
 		}, function (dataResp) {
 			//console.log(data);
@@ -111,6 +110,8 @@ module.exports = {
 				console.log(trailer.bgWhite.blue);
 				console.log(' '.reset);
 			}
+		}, function(e) {
+			console.log(('Error while post/patch: ' + e).red);
 		});
 	}
 };
