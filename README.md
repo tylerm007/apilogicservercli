@@ -11,9 +11,11 @@ Refer to online documentation of creating and running the API Logic Server [REST
     git clone https://github.com/tylerm007/apilogicservercli.git
     cd apilogicservercli
     
-    node install -g
+    npm install -g
 
     node apilogicservercli.js --help (or use the shortcut als --help)
+        or
+    als --help
 ```
 
 

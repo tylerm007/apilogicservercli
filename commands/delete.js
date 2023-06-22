@@ -47,7 +47,7 @@ module.exports = {
 					return;
 				}
 				if (cmd.format == "json") {
-					console.log(JSON.stringify(data, null, 2));
+					console.log(JSON.parse(data));
 				}
 				else if (cmd.format == "compactjson") {
 					console.log(JSON.stringify(data));
