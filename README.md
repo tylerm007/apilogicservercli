@@ -52,7 +52,7 @@ Refer to online documentation of creating and running the API Logic Server [REST
 
 ## Logon to an API Server
 ```sh
-$als login http://localhost:5656 -u ui -p 1 -a northwind
+$als login http://localhost:5656 -u u1 -p 1 -a northwind
 Logging in...
 Login successful, JWT key will expire on: 2023-11-18T15:03:37.342Z
 ```
@@ -86,17 +86,16 @@ $als describe tables
 
 DB    Table
 ----  -------------------
-demo  customer
-demo  employee
-demo  employee_picture
-demo  LineItem
-demo  product
-demo  PurchaseOrder
-demo  purchaseorder_audit
+nw    Customer
+nw    Employee
+nw    Order
+nw    OrderItem
+nw    Product
+nw    PurchaseOrder
 ```
 
 ```sh
-$als describe tables/product
+$als describe table/Product
 
 Name            Type     Size      PK
 --------------  -------  --------  --
@@ -140,15 +139,17 @@ etc...
 ## GET a single REST endpoint (JSON format)
 ```sh
 $als get "api/Employee/4" -m json
-[
-  {
+or
+$als get "api/Employee" -k 4 -m json
+{
+ "data": {
     "employee_id": 4,
     "login": "jkim",
     "name": "John Kim"
   }
-]
+}
 
-$als get "api/Customer" --userfilter "myFilter(custname:'Alpha and Sons')" --userorder "sortByName"
+$als get "api/Customer" --filter "filter[Id]=Alpha and Sons" --order "CustomerName"
 ```
 
 ## POST (insert) a JSON payload
@@ -174,7 +175,7 @@ Request took: 61ms - # objects touched: 1
 ```
 
 ## PUT (update) a JSON Payload
-
+This will send a PATCH to ALS.
 ```sh
 $als put --help
 
