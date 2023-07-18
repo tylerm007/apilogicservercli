@@ -59,6 +59,7 @@ module.exports = {
 		}
 		//console.log(objUrl + params);
 		//?page%5Boffset%5D=0&page%5Blimit%5D=10&sort=id&filter%5Bid%5D=1
+		process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 		let startTime = new Date();
 		client.get(url + "/" + objUrl + params, {
 			headers: {
@@ -95,7 +96,7 @@ module.exports = {
 						
 			if (cmd.format == "json") {
 				//console.log(JSON.stringify(data, null, 2));
-				console.log(JSON.parse(data))
+				console.log(JSON.parse(JSON.stringify(data,2, null)))
 			}
 			else if (cmd.format == "compactjson") {
 				//console.log(JSON.stringify(data));

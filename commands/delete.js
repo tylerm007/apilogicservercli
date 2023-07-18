@@ -31,7 +31,7 @@ module.exports = {
 			console.log('Error: a resource or table name must be specified, or a JSON file must be specified'.red);
 			return;
 		}
-		
+		process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 		function delObject(url) {
 			client['delete'](url, {
 				headers: {

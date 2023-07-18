@@ -56,6 +56,7 @@ module.exports = {
 		if (cmd.pk) {
 			fullResource += "/" + cmd.pk;
 		}
+		process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 		client[verb](url + "/" + fullResource, {
 			data: cmd.json,
 			headers: {
@@ -93,9 +94,7 @@ module.exports = {
 			} else if (cmd.format == "compactjson") {
 				console.log(JSON.stringify(data));
 			} else {
-				//_.each(data.txsummary, function (obj) {
-				//	printObject.printObject(obj, obj['@metadata'].entity, 0, obj['@metadata'].verb);
-				//});
+				console.log(JSON.stringify(data));
 			}
 
 			if (!cmd.format || cmd.format === "text") {
